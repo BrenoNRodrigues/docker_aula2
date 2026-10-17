@@ -24,6 +24,13 @@ pipeline{
                 }
             }
         }
+
+        post{
+                always{
+                    junit testResults: 'target/surefire-reports/TEST-*.xml',
+                    allowEmptyResults: false
+                }
+        
         stage('Guardar o Build'){
             steps{
                 archiveArtifacts artifacts: 'target/*.jar',
