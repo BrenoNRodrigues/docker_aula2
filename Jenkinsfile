@@ -5,6 +5,10 @@ pipeline{
         jdk 'JDK21'
         maven 'Maven3'
     }
+
+    triggers{
+        pollSCM('H/5 * * * *')
+    }
     
     stages{
         stage('Baixar o Código'){
@@ -23,13 +27,12 @@ pipeline{
                     }
                 }
             }
-        }
-
-        post{
+            post{
                 always{
                     junit testResults: 'target/surefire-reports/TEST-*.xml',
                     allowEmptyResults: false
                 }
+            }
         }
         stage('Guardar o Build'){
             steps{
